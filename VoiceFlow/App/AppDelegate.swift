@@ -1,5 +1,6 @@
 import AppKit
 import SwiftUI
+import Carbon.HIToolbox
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     private var statusItem: NSStatusItem?
@@ -10,6 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         setupMenuBar()
         setupOverlayPanel()
+        setupGlobalShortcuts()
     }
 
     private func setupMenuBar() {
@@ -46,6 +48,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         overlayWindow = panel
     }
 
+    private func setupGlobalShortcuts() {
+        NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            self?.handleKeyEvent(event)
+        }
+
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
+            if self?.handleKeyEvent(event) == true {
+                return nil
+            }
+            return event
+        }
+    }
+
     @objc private func togglePopover() {
         guard let button = statusItem?.button, let popover = popover else { return }
 
@@ -53,6 +68,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             popover.performClose(nil)
         } else {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+        }
+    }
+
+    @discardableResult
+    private func handleKeyEvent(_ event: NSEvent) -> Bool {
+        let modifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+
+        // Check for Option key
+        guard modifiers.contains(.option) else { return false }
+
+        switch event.charactersIgnoringModifiers {
+        case "p":
+            viewModel?.toggleScrolling()
+            return true
+        case "r":
+            viewModel?.resetScroll()
+            return true
+        case "j":
+            viewModel?.jumpBack()
+            return true
+        case "h":
+            if viewModel?.isOverlayVisible == true {
+                hideOverlay()
+            } else {
+                showOverlay()
+            }
+            return true
+        case "m":
+            viewModel?.isMirrorMode.toggle()
+            return true
+        case "a":
+            viewModel?.acceptAISuggestion()
+            return true
+        case "d":
+            viewModel?.dismissAISuggestion()
+            return true
+        default:
+            return false
         }
     }
 
@@ -67,9 +120,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         window.orderFront(nil)
+        viewModel?.isOverlayVisible = true
     }
 
     func hideOverlay() {
         overlayWindow?.orderOut(nil)
+        viewModel?.isOverlayVisible = false
     }
 }
