@@ -77,8 +77,8 @@ struct DisplaySettingsView: View {
                     Divider()
 
                     // Toggles
-                    GlassToggle("Mirror Mode", isOn: $viewModel.isMirrorMode)
-                    GlassToggle("Show Guide Line", isOn: $viewModel.showGuideLine)
+                    GlassToggle(title: "Mirror Mode", isOn: $viewModel.isMirrorMode)
+                    GlassToggle(title: "Show Guide Line", isOn: $viewModel.showGuideLine)
                 }
             }
             .padding(.horizontal)

@@ -78,12 +78,12 @@ class SpeechRecognitionViewModel: ObservableObject {
     }
 
     private func startRecognition() throws {
+        guard let speechRecognizer = speechRecognizer else {
+            throw NSError(domain: "SpeechRecognition", code: 2, userInfo: [NSLocalizedDescriptionKey: "Speech recognizer not available"])
+        }
+
         recognitionTask?.cancel()
         recognitionTask = nil
-
-        let audioSession = AVAudioSession.sharedInstance()
-        try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-        try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
 
         recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
 

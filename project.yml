@@ -1,33 +1,34 @@
-name: Teleprompter
+name: VoiceFlow
 options:
-  bundleId: com.teleprompter.app
+  bundleIdPrefix: com.voiceflow
   deploymentTarget:
-    macOS: "13.0"
-  xcodeVersion: "15.0"
+    macOS: "26.0"
+  xcodeVersion: "16.0"
 
 settings:
   base:
-    MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "1"
     SWIFT_VERSION: "5.9"
-    MACOSX_DEPLOYMENT_TARGET: "13.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
+    CODE_SIGN_IDENTITY: "-"
+    CODE_SIGNING_REQUIRED: NO
+    CODE_SIGN_ENTITLEMENTS: VoiceFlow/VoiceFlow.entitlements
 
 targets:
-  Teleprompter:
+  VoiceFlow:
     type: application
     platform: macOS
     sources:
-      - path: Teleprompter
+      - path: VoiceFlow
+        excludes:
+          - "**/.DS_Store"
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.teleprompter.app
-        INFOPLIST_FILE: Teleprompter/Info.plist
-        CODE_SIGN_STYLE: Automatic
-        CODE_SIGN_IDENTITY: "-"
-        PRODUCT_NAME: Teleprompter
+        PRODUCT_BUNDLE_IDENTIFIER: com.voiceflow.app
+        INFOPLIST_FILE: VoiceFlow/Info.plist
+        PRODUCT_NAME: VoiceFlow
+        GENERATE_INFOPLIST_FILE: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        COMBINE_HIDPI_IMAGES: YES
-        ENABLE_HARDENED_RUNTIME: YES
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
+        ENABLE_HARDENED_RUNTIME: YES
     entitlements:
-      path: Teleprompter/Teleprompter.entitlements
+      path: VoiceFlow/VoiceFlow.entitlements

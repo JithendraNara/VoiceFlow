@@ -1,6 +1,6 @@
 import Foundation
 
-enum AIProviderType: String, CaseIterable, Identifiable {
+enum AIProviderType: String, CaseIterable, Identifiable, Codable {
     case openAI = "OpenAI"
     case anthropic = "Anthropic"
     case google = "Google"

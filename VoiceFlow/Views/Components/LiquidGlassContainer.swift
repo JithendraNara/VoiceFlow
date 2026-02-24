@@ -101,7 +101,7 @@ struct GlassToggle: View {
             GlassButton("Pause", icon: "pause.fill") {}
         }
 
-        GlassToggle("Enable AI", isOn: .constant(true))
+        GlassToggle(title: "Enable AI", isOn: .constant(true))
     }
     .padding()
     .frame(width: 400)

@@ -113,7 +113,7 @@ class TeleprompterViewModel: ObservableObject {
     // MARK: - Script Management
     func loadFromFile() {
         let panel = NSOpenPanel()
-        panel.allowedContentTypes = [.plainText, .rtf, .markdown]
+        panel.allowedContentTypes = [.plainText, .rtf]
         panel.allowsMultipleSelection = false
         panel.canChooseDirectories = false
 

@@ -12,7 +12,7 @@ struct AISettingsView: View {
             // Enable AI
             LiquidGlassCard("AI Assistant", icon: "brain.fill") {
                 VStack(alignment: .leading, spacing: 12) {
-                    GlassToggle("Enable AI Suggestions", isOn: $viewModel.aiEnabled)
+                    GlassToggle(title: "Enable AI Suggestions", isOn: $viewModel.aiEnabled)
                 }
             }
             .padding(.horizontal)
@@ -104,8 +104,8 @@ struct AISettingsView: View {
 
                         Divider()
 
-                        GlassToggle("Show Follow-up Prompts", isOn: $viewModel.showFollowUps)
-                        GlassToggle("Highlight Keywords", isOn: $viewModel.highlightKeywords)
+                        GlassToggle(title: "Show Follow-up Prompts", isOn: $viewModel.showFollowUps)
+                        GlassToggle(title: "Highlight Keywords", isOn: $viewModel.highlightKeywords)
                     }
                 }
                 .padding(.horizontal)
